@@ -1,0 +1,17 @@
+id: 17215
+name: dcat
+environments:
+    staging:
+        database: dcat-demo
+        memory: 1024
+        cli-memory: 512
+        concurrency: 10
+        warm: 5
+        timeout: 20
+        runtime: php-7.4
+        storage: dcat-uploads
+        build:
+            - 'COMPOSER_MIRROR_PATH_REPOS=1 composer install'
+            - 'php artisan event:cache'
+        deploy:
+            - 'php artisan migrate --force'

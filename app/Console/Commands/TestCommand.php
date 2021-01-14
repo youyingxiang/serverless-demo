@@ -2,7 +2,9 @@
 
 namespace App\Console\Commands;
 
+use App\Jobs\TestJop;
 use Illuminate\Console\Command;
+use Illuminate\Queue\Jobs\Job;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 
@@ -39,12 +41,15 @@ class TestCommand extends Command
      */
     public function handle()
     {
-        Log::info(
-            Str::replaceArray(
-                "?",
-                [now()->format('Y-m-d H:i:s')],
-                "current time: ?"
-            )
+        $title = "test schedule and queue";
+
+        $content = Str::replaceArray(
+            "?",
+            [now()->format('Y-m-d H:i:s')],
+            "current time: ?"
         );
+
+        TestJop::dispatch($title,$content);
+
     }
 }
